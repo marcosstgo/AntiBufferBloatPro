@@ -1,0 +1,187 @@
+﻿<Window x:Class="AntiBufferBloatPro.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Anti-BufferBloat Pro" Height="750" Width="1000"
+        Background="#2B2D31" WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <!-- Paleta tipo Discord -->
+        <SolidColorBrush x:Key="Bg"           Color="#2B2D31"/>
+        <SolidColorBrush x:Key="Card"         Color="#313338"/>
+        <SolidColorBrush x:Key="Header"       Color="#1E1F22"/>
+        <SolidColorBrush x:Key="Border"       Color="#3F4147"/>
+        <SolidColorBrush x:Key="Text"         Color="#E3E5E8"/>
+        <SolidColorBrush x:Key="Muted"        Color="#B5BAC1"/>
+        <SolidColorBrush x:Key="Accent"       Color="#5865F2"/>
+        <SolidColorBrush x:Key="Success"      Color="#3BA55D"/>
+        <SolidColorBrush x:Key="ConsoleBg"    Color="#1E1F22"/>
+        <SolidColorBrush x:Key="ConsoleFg"    Color="#00FF88"/>
+        <!-- Para resetear perfiles a gris -->
+        <SolidColorBrush x:Key="SecondaryBg"  Color="#3F4147"/>
+
+        <!-- Estilos -->
+        <Style x:Key="PrimaryBtn" TargetType="Button">
+            <Setter Property="Foreground" Value="{StaticResource Text}"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Background" Value="{StaticResource Accent}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Accent}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Height" Value="44"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Opacity" Value="0.92"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="SecondaryBtn" TargetType="Button" BasedOn="{StaticResource PrimaryBtn}">
+            <Setter Property="Background" Value="{StaticResource SecondaryBg}"/>
+            <Setter Property="BorderBrush" Value="#4A4D55"/>
+        </Style>
+
+        <Style x:Key="CardStyle" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource Card}"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Padding" Value="15"/>
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource Text}"/>
+        </Style>
+
+        <!-- Margen vertical por defecto para hijos en StackPanel -->
+        <Style x:Key="StackChildSpacing" TargetType="FrameworkElement">
+            <Setter Property="Margin" Value="0,6,0,0"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="{StaticResource Header}" CornerRadius="10" Padding="12" Margin="0,0,0,10">
+            <DockPanel LastChildFill="False">
+                <TextBlock Text="Anti-BufferBloat Pro" FontSize="26" FontWeight="Black"/>
+                <Border Background="#202225" CornerRadius="8" Padding="8,4" DockPanel.Dock="Right">
+                    <TextBlock x:Name="txtProfile" Foreground="{StaticResource Accent}" FontWeight="Bold" Text="Perfil: Ninguno"/>
+                </Border>
+            </DockPanel>
+        </Border>
+
+        <!-- Main -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Izquierda -->
+            <StackPanel Grid.Column="0">
+                <!-- Status -->
+                <Border Style="{StaticResource CardStyle}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="160"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="Status" Foreground="{StaticResource Muted}" FontSize="16" Margin="0,0,0,8"/>
+
+                        <!-- Gráfica -->
+                        <Border Grid.Row="1" Background="#26282E" CornerRadius="8" Padding="4" Margin="0,4,0,10">
+                            <Canvas x:Name="PingCanvas" Height="150"/>
+                        </Border>
+
+                        <!-- Datos -->
+                        <StackPanel Grid.Row="2">
+                            <TextBlock x:Name="lblPing"   Text="Ping: -- ms"     Foreground="{StaticResource Success}" FontSize="15" Style="{StaticResource StackChildSpacing}"/>
+                            <TextBlock x:Name="lblIpExt"  Text="IP Ext: --"       Foreground="{StaticResource Muted}" FontSize="14" Style="{StaticResource StackChildSpacing}"/>
+                            <TextBlock x:Name="lblIpInt"  Text="IP Int: --"       Foreground="{StaticResource Muted}" FontSize="14" Style="{StaticResource StackChildSpacing}"/>
+                            <TextBlock x:Name="lblAuto"   Text="Auto-Tuning: --"  Foreground="{StaticResource Muted}" FontSize="14" Style="{StaticResource StackChildSpacing}"/>
+                            <TextBlock x:Name="lblRss"    Text="RSS: --"          Foreground="{StaticResource Muted}" FontSize="14" Style="{StaticResource StackChildSpacing}"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Toggles -->
+                <Border Style="{StaticResource CardStyle}" Margin="0,12,0,0">
+                    <StackPanel>
+                        <TextBlock Text="Ajustes rápidos" Foreground="{StaticResource Muted}" FontSize="16" Margin="0,0,0,8"/>
+                        <UniformGrid Columns="2">
+                            <CheckBox x:Name="tgEcn"  Content="ECN"         Foreground="{StaticResource Text}" Margin="0,6"
+                                      Checked="tgEcn_Checked" Unchecked="tgEcn_Unchecked"/>
+                            <CheckBox x:Name="tgRss"  Content="RSS"         Foreground="{StaticResource Text}" Margin="0,6"
+                                      Checked="tgRss_Checked" Unchecked="tgRss_Unchecked"/>
+                            <CheckBox x:Name="tgAuto" Content="Auto-Tuning" Foreground="{StaticResource Text}" Margin="0,6"
+                                      Checked="tgAuto_Checked" Unchecked="tgAuto_Unchecked"/>
+                            <CheckBox x:Name="tgTray" Content="Tray Mode"   Foreground="{StaticResource Text}" Margin="0,6"
+                                      Checked="tgTray_Checked" Unchecked="tgTray_Unchecked"/>
+                        </UniformGrid>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- Derecha -->
+            <StackPanel Grid.Column="1">
+                <!-- Perfiles -->
+                <Border Style="{StaticResource CardStyle}" Width="553">
+                    <StackPanel>
+                        <TextBlock Text="Perfiles" Foreground="{StaticResource Muted}" FontSize="16"/>
+                        <UniformGrid Columns="3" Margin="0,10,0,0">
+                            <!-- Por defecto grises; el activo se pinta Accent -->
+                            <Button x:Name="btnGaming"    Content="Gaming"       Style="{StaticResource SecondaryBtn}" Margin="6" Click="btnGaming_Click"/>
+                            <Button x:Name="btnStreaming" Content="Streaming"    Style="{StaticResource SecondaryBtn}" Margin="6" Click="btnStreaming_Click"/>
+                            <Button x:Name="btnBrowsing"  Content="Web Browsing" Style="{StaticResource SecondaryBtn}" Margin="6" Click="btnBrowsing_Click"/>
+                        </UniformGrid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Acciones -->
+                <Border Style="{StaticResource CardStyle}" Margin="0,12,0,0" Width="560">
+                    <UniformGrid Columns="3">
+                        <Button Content="Normal Auto-Tuning" Style="{StaticResource SecondaryBtn}" Margin="6" Click="NormalAuto_Click"/>
+                        <Button Content="Disable Auto-Tuning" Style="{StaticResource SecondaryBtn}" Margin="6" Click="DisableAuto_Click"/>
+                        <Button Content="Enable RSS"           Style="{StaticResource SecondaryBtn}" Margin="6" Click="EnableRss_Click"/>
+                        <Button Content="Disable RSS"          Style="{StaticResource SecondaryBtn}" Margin="6" Click="DisableRss_Click"/>
+                        <Button Content="Backup TCP"           Style="{StaticResource SecondaryBtn}" Margin="6" Click="Backup_Click"/>
+                        <Button Content="Restore TCP"          Style="{StaticResource SecondaryBtn}" Margin="6" Click="Restore_Click"/>
+                        <Button Content="Diagnóstico"          Style="{StaticResource SecondaryBtn}" Margin="6" Click="Diag_Click"/>
+                        <Button Content="Speedtest.net"        Style="{StaticResource PrimaryBtn}"   Margin="6" Click="Speedtest_Click"/>
+                        <Button Content="BufferBloat Test"     Style="{StaticResource PrimaryBtn}"   Margin="6" Click="Bufferbloat_Click"/>
+                    </UniformGrid>
+                </Border>
+            </StackPanel>
+        </Grid>
+
+        <!-- Log -->
+        <Border Grid.Row="2" Background="{StaticResource ConsoleBg}" CornerRadius="10" Padding="6" Margin="0,12,0,0" BorderBrush="{StaticResource Border}" BorderThickness="1">
+            <TextBox x:Name="txtLog"
+                 Text="> Log de comandos aparecerá aquí..."
+                 Background="{StaticResource ConsoleBg}"
+                 Foreground="{StaticResource ConsoleFg}"
+                 FontFamily="Consolas" FontSize="12"
+                 TextWrapping="Wrap" AcceptsReturn="True"
+                 VerticalScrollBarVisibility="Auto" Height="120"
+                 IsReadOnly="True" BorderThickness="0"/>
+        </Border>
+    </Grid>
+</Window>

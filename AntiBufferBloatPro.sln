@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35027.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntiBufferBloatPro", "AntiBufferBloatPro\AntiBufferBloatPro.csproj", "{7F8CA066-EC81-403B-8FCC-E118490AC8CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7F8CA066-EC81-403B-8FCC-E118490AC8CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F8CA066-EC81-403B-8FCC-E118490AC8CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F8CA066-EC81-403B-8FCC-E118490AC8CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F8CA066-EC81-403B-8FCC-E118490AC8CE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {409A2CDE-8DDA-45C7-B6BC-A1F1E23D145A}
+	EndGlobalSection
+EndGlobal
