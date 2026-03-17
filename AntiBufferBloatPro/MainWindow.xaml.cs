@@ -1342,7 +1342,7 @@ namespace AntiBufferBloatPro
             {
                 const string apiUrl = "https://api.github.com/repos/marcosstgo/AntiBufferBloatPro/releases/latest";
                 using var req = new HttpRequestMessage(HttpMethod.Get, apiUrl);
-                req.Headers.UserAgent.ParseAdd("AntiBufferBloatPro/1.0.0");
+                req.Headers.UserAgent.ParseAdd("AntiBufferBloatPro/1.1.0");
                 using var resp = await _updateHttp.SendAsync(req).ConfigureAwait(false);
                 if (!resp.IsSuccessStatusCode) return;
 
