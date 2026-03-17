@@ -107,7 +107,7 @@ namespace AntiBufferBloatPro
             try
             {
                 Icon = new System.Windows.Media.Imaging.BitmapImage(
-                    new Uri("pack://application:,,,/abp.ico"));
+                    new Uri("pack://application:,,,/abp.png"));
             }
             catch { }
             InitializeApplication();
