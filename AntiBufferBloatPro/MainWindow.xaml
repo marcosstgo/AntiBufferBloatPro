@@ -1,187 +1,1211 @@
 ﻿<Window x:Class="AntiBufferBloatPro.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Anti-BufferBloat Pro" Height="750" Width="1000"
-        Background="#2B2D31" WindowStartupLocation="CenterScreen">
+        Title="Anti-BufferBloat Pro" Height="1050" Width="1200"
+        MinHeight="800" MinWidth="960"
+        Background="{DynamicResource Bg}" WindowStartupLocation="CenterScreen"
+        SizeChanged="Window_SizeChanged"
+        Name="MainWindowControl">
 
     <Window.Resources>
-        <!-- Paleta tipo Discord -->
-        <SolidColorBrush x:Key="Bg"           Color="#2B2D31"/>
-        <SolidColorBrush x:Key="Card"         Color="#313338"/>
-        <SolidColorBrush x:Key="Header"       Color="#1E1F22"/>
-        <SolidColorBrush x:Key="Border"       Color="#3F4147"/>
-        <SolidColorBrush x:Key="Text"         Color="#E3E5E8"/>
-        <SolidColorBrush x:Key="Muted"        Color="#B5BAC1"/>
-        <SolidColorBrush x:Key="Accent"       Color="#5865F2"/>
-        <SolidColorBrush x:Key="Success"      Color="#3BA55D"/>
-        <SolidColorBrush x:Key="ConsoleBg"    Color="#1E1F22"/>
-        <SolidColorBrush x:Key="ConsoleFg"    Color="#00FF88"/>
-        <!-- Para resetear perfiles a gris -->
-        <SolidColorBrush x:Key="SecondaryBg"  Color="#3F4147"/>
+        <!-- ========== PALETA GAMER PRO ========== -->
+        <Color x:Key="NeonCyanColor">#00F0FF</Color>
+        <Color x:Key="NeonMagentaColor">#FF00E5</Color>
+        <Color x:Key="NeonGreenColor">#00FF88</Color>
+        <Color x:Key="NeonRedColor">#FF2D55</Color>
+        <Color x:Key="NeonAmberColor">#FFB800</Color>
 
-        <!-- Estilos -->
+        <SolidColorBrush x:Key="Bg"              Color="#0A0A0F"/>
+        <SolidColorBrush x:Key="Card"            Color="#12121A"/>
+        <SolidColorBrush x:Key="CardElevated"    Color="#1A1A25"/>
+        <SolidColorBrush x:Key="Header"          Color="#08080D"/>
+        <SolidColorBrush x:Key="Border"          Color="#1E1E2E"/>
+        <SolidColorBrush x:Key="BorderSubtle"    Color="#16161F"/>
+        <SolidColorBrush x:Key="NeonCyan"        Color="{StaticResource NeonCyanColor}"/>
+        <SolidColorBrush x:Key="NeonCyanDim"     Color="#0099AA"/>
+        <SolidColorBrush x:Key="NeonMagenta"     Color="{StaticResource NeonMagentaColor}"/>
+        <SolidColorBrush x:Key="NeonMagentaDim"  Color="#AA0099"/>
+        <SolidColorBrush x:Key="NeonGreen"       Color="{StaticResource NeonGreenColor}"/>
+        <SolidColorBrush x:Key="NeonRed"         Color="{StaticResource NeonRedColor}"/>
+        <SolidColorBrush x:Key="NeonAmber"       Color="{StaticResource NeonAmberColor}"/>
+        <SolidColorBrush x:Key="Text"            Color="#E8E8F0"/>
+        <SolidColorBrush x:Key="TextSecondary"   Color="#9999B0"/>
+        <SolidColorBrush x:Key="Muted"           Color="#555570"/>
+        <SolidColorBrush x:Key="Accent"          Color="#00F0FF"/>
+        <SolidColorBrush x:Key="AccentHover"     Color="#00CCDD"/>
+        <SolidColorBrush x:Key="AccentSubtle"    Color="#009AAA"/>
+        <SolidColorBrush x:Key="Success"         Color="#00FF88"/>
+        <SolidColorBrush x:Key="Warning"         Color="#FFB800"/>
+        <SolidColorBrush x:Key="Danger"          Color="#FF2D55"/>
+        <SolidColorBrush x:Key="ConsoleBg"       Color="#05050A"/>
+        <SolidColorBrush x:Key="ConsoleFg"       Color="#00FF88"/>
+        <SolidColorBrush x:Key="SecondaryBg"     Color="#12121A"/>
+        <SolidColorBrush x:Key="SecondaryHover"  Color="#1A1A28"/>
+        <SolidColorBrush x:Key="TertiaryBg"      Color="#0E0E16"/>
+
+        <!-- Gradientes Neón -->
+        <LinearGradientBrush x:Key="CyanGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#00F0FF" Offset="0"/>
+            <GradientStop Color="#0088FF" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="MagentaGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF00E5" Offset="0"/>
+            <GradientStop Color="#AA00FF" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="GamingGradient" StartPoint="0,0" EndPoint="1,0">
+            <GradientStop Color="#00F0FF" Offset="0"/>
+            <GradientStop Color="#FF00E5" Offset="0.5"/>
+            <GradientStop Color="#00FF88" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="HeaderGradient" StartPoint="0,0" EndPoint="1,0">
+            <GradientStop Color="#0A0A12" Offset="0"/>
+            <GradientStop Color="#0F0F1A" Offset="0.5"/>
+            <GradientStop Color="#0A0A12" Offset="1"/>
+        </LinearGradientBrush>
+
+        <!-- Glow Effects -->
+        <DropShadowEffect x:Key="CyanGlow" BlurRadius="15" ShadowDepth="0" Opacity="0.6" Color="{StaticResource NeonCyanColor}"/>
+        <DropShadowEffect x:Key="CyanGlowSubtle" BlurRadius="8" ShadowDepth="0" Opacity="0.3" Color="{StaticResource NeonCyanColor}"/>
+        <DropShadowEffect x:Key="MagentaGlow" BlurRadius="15" ShadowDepth="0" Opacity="0.5" Color="{StaticResource NeonMagentaColor}"/>
+        <DropShadowEffect x:Key="GreenGlow" BlurRadius="12" ShadowDepth="0" Opacity="0.5" Color="{StaticResource NeonGreenColor}"/>
+        <DropShadowEffect x:Key="CardGlow" BlurRadius="20" ShadowDepth="0" Opacity="0.15" Color="{StaticResource NeonCyanColor}"/>
+        <DropShadowEffect x:Key="RedGlow" BlurRadius="10" ShadowDepth="0" Opacity="0.4" Color="{StaticResource NeonRedColor}"/>
+
+        <!-- ===== BOTÓN PRIMARIO NEÓN ===== -->
         <Style x:Key="PrimaryBtn" TargetType="Button">
-            <Setter Property="Foreground" Value="{StaticResource Text}"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Background" Value="{StaticResource Accent}"/>
-            <Setter Property="BorderBrush" Value="{StaticResource Accent}"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Padding" Value="10"/>
-            <Setter Property="Height" Value="44"/>
+            <Setter Property="Foreground" Value="#0A0A0F"/>
+            <Setter Property="FontWeight" Value="Black"/>
+            <Setter Property="Background" Value="{StaticResource CyanGradient}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="Height" Value="42"/>
             <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontFamily" Value="Segoe UI, sans-serif"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border CornerRadius="10"
+                        <Border x:Name="btnBorder" CornerRadius="6"
                                 Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}">
-                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                BorderThickness="0"
+                                Effect="{StaticResource CyanGlowSubtle}"
+                                RenderTransformOrigin="0.5,0.5">
+                            <Border.RenderTransform>
+                                <ScaleTransform ScaleX="1" ScaleY="1"/>
+                            </Border.RenderTransform>
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"
+                                              Margin="{TemplateBinding Padding}"/>
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="btnBorder" Property="Effect" Value="{StaticResource CyanGlow}"/>
+                            </Trigger>
+                            <EventTrigger RoutedEvent="MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="btnBorder"
+                                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                                         To="1.04" Duration="0:0:0.15"/>
+                                        <DoubleAnimation Storyboard.TargetName="btnBorder"
+                                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                                         To="1.04" Duration="0:0:0.15"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="btnBorder"
+                                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                                         To="1.0" Duration="0:0:0.15"/>
+                                        <DoubleAnimation Storyboard.TargetName="btnBorder"
+                                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                                         To="1.0" Duration="0:0:0.15"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="btnBorder" Property="Opacity" Value="0.8"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Opacity" Value="0.92"/>
-                </Trigger>
-            </Style.Triggers>
         </Style>
 
-        <Style x:Key="SecondaryBtn" TargetType="Button" BasedOn="{StaticResource PrimaryBtn}">
+        <!-- ===== BOTÓN SECUNDARIO CON BORDE NEÓN ===== -->
+        <Style x:Key="SecondaryBtn" TargetType="Button">
+            <Setter Property="Foreground" Value="{StaticResource Text}"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Background" Value="{StaticResource SecondaryBg}"/>
-            <Setter Property="BorderBrush" Value="#4A4D55"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="14,10"/>
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontFamily" Value="Segoe UI, sans-serif"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="btnBorder" CornerRadius="6"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{StaticResource Border}"
+                                BorderThickness="1"
+                                RenderTransformOrigin="0.5,0.5">
+                            <Border.RenderTransform>
+                                <ScaleTransform ScaleX="1" ScaleY="1"/>
+                            </Border.RenderTransform>
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"
+                                              Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="btnBorder" Property="Background" Value="{StaticResource SecondaryHover}"/>
+                                <Setter TargetName="btnBorder" Property="BorderBrush" Value="{StaticResource NeonCyanDim}"/>
+                                <Setter Property="Foreground" Value="{StaticResource NeonCyan}"/>
+                            </Trigger>
+                            <EventTrigger RoutedEvent="MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="btnBorder"
+                                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                                         To="1.03" Duration="0:0:0.12"/>
+                                        <DoubleAnimation Storyboard.TargetName="btnBorder"
+                                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                                         To="1.03" Duration="0:0:0.12"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="btnBorder"
+                                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                                         To="1.0" Duration="0:0:0.12"/>
+                                        <DoubleAnimation Storyboard.TargetName="btnBorder"
+                                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                                         To="1.0" Duration="0:0:0.12"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="btnBorder" Property="Opacity" Value="0.7"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
+        <!-- ===== CARD GAMER CON BORDE SUTIL NEÓN ===== -->
         <Style x:Key="CardStyle" TargetType="Border">
-            <Setter Property="Background" Value="{StaticResource Card}"/>
-            <Setter Property="CornerRadius" Value="12"/>
-            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Background" Value="{DynamicResource Card}"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Border}"/>
+            <Setter Property="BorderThickness" Value="1"/>
         </Style>
 
+        <!-- TextBlock global -->
         <Style TargetType="TextBlock">
             <Setter Property="Foreground" Value="{StaticResource Text}"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontFamily" Value="Segoe UI, sans-serif"/>
         </Style>
 
-        <!-- Margen vertical por defecto para hijos en StackPanel -->
-        <Style x:Key="StackChildSpacing" TargetType="FrameworkElement">
-            <Setter Property="Margin" Value="0,6,0,0"/>
+        <Style x:Key="SectionTitle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource NeonCyan}"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Black"/>
+            <Setter Property="Margin" Value="0,0,0,14"/>
+            <Setter Property="FontFamily" Value="Segoe UI, sans-serif"/>
+        </Style>
+
+        <Style x:Key="MetricLabel" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource Muted}"/>
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0,0,0,3"/>
+            <Setter Property="FontFamily" Value="Segoe UI, sans-serif"/>
+        </Style>
+
+        <!-- ===== TOGGLE SWITCH NEÓN ===== -->
+        <Style x:Key="ToggleCheckBox" TargetType="CheckBox">
+            <Setter Property="Foreground" Value="{StaticResource TextSecondary}"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,5"/>
+            <Setter Property="FontFamily" Value="Segoe UI, sans-serif"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Toggle Track -->
+                            <Border x:Name="track"
+                                    Width="38" Height="20"
+                                    CornerRadius="10"
+                                    Background="#1E1E2E"
+                                    BorderBrush="#2A2A3A"
+                                    BorderThickness="1"
+                                    Margin="0,0,10,0">
+                                <!-- Toggle Thumb -->
+                                <Ellipse x:Name="thumb"
+                                         Width="14" Height="14"
+                                         Fill="#555570"
+                                         HorizontalAlignment="Left"
+                                         Margin="2,0,0,0">
+                                    <Ellipse.RenderTransform>
+                                        <TranslateTransform x:Name="thumbTranslate" X="0"/>
+                                    </Ellipse.RenderTransform>
+                                </Ellipse>
+                            </Border>
+
+                            <ContentPresenter Grid.Column="1"
+                                              VerticalAlignment="Center"
+                                              Margin="2,0,0,0"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="track" Property="Background" Value="#002A22"/>
+                                <Setter TargetName="track" Property="BorderBrush" Value="{StaticResource NeonGreen}"/>
+                                <Setter TargetName="thumb" Property="Fill" Value="{StaticResource NeonGreen}"/>
+                                <Setter TargetName="thumb" Property="Effect" Value="{StaticResource GreenGlow}"/>
+                            </Trigger>
+                            <EventTrigger RoutedEvent="CheckBox.Checked">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="thumbTranslate"
+                                                         Storyboard.TargetProperty="X"
+                                                         To="18" Duration="0:0:0.2">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="CheckBox.Unchecked">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="thumbTranslate"
+                                                         Storyboard.TargetProperty="X"
+                                                         To="0" Duration="0:0:0.2">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="{StaticResource Text}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- ===== SCROLLBAR GAMER ===== -->
+        <Style TargetType="ScrollBar">
+            <Setter Property="Width" Value="4"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ScrollBar">
+                        <Grid>
+                            <Track x:Name="PART_Track" IsDirectionReversed="true">
+                                <Track.Thumb>
+                                    <Thumb>
+                                        <Thumb.Template>
+                                            <ControlTemplate TargetType="Thumb">
+                                                <Border CornerRadius="2" Background="{StaticResource NeonCyanDim}" Opacity="0.5" Margin="1"/>
+                                            </ControlTemplate>
+                                        </Thumb.Template>
+                                    </Thumb>
+                                </Track.Thumb>
+                            </Track>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- ===== COMBOBOX GAMER ===== -->
+        <Style TargetType="ComboBox">
+            <Setter Property="Background" Value="{DynamicResource CardElevated}"/>
+            <Setter Property="Foreground" Value="{StaticResource Text}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Border}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="8,5"/>
+            <Setter Property="FontFamily" Value="Consolas"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <ToggleButton x:Name="ToggleButton"
+                                          Background="{DynamicResource CardElevated}"
+                                          BorderBrush="{StaticResource Border}"
+                                          BorderThickness="1"
+                                          Foreground="{StaticResource Text}"
+                                          IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                          Focusable="False" ClickMode="Press">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border Background="{DynamicResource CardElevated}"
+                                                BorderBrush="{StaticResource Border}"
+                                                BorderThickness="1" CornerRadius="4">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="24"/>
+                                                </Grid.ColumnDefinitions>
+                                                <ContentPresenter Grid.Column="0" Margin="8,5" VerticalAlignment="Center"/>
+                                                <TextBlock Grid.Column="1" Text="▾" Foreground="{StaticResource NeonCyan}"
+                                                           VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="11"/>
+                                            </Grid>
+                                        </Border>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+                            <ContentPresenter x:Name="ContentSite"
+                                              IsHitTestVisible="False"
+                                              Content="{TemplateBinding SelectionBoxItem}"
+                                              ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                              Margin="8,5,28,5"
+                                              VerticalAlignment="Center"/>
+                            <Popup x:Name="Popup" Placement="Bottom"
+                                   IsOpen="{TemplateBinding IsDropDownOpen}"
+                                   AllowsTransparency="True" Focusable="False"
+                                   PopupAnimation="Slide">
+                                <Border x:Name="DropDown"
+                                        Background="{DynamicResource CardElevated}"
+                                        BorderBrush="{StaticResource NeonCyanDim}"
+                                        BorderThickness="1" CornerRadius="0,0,4,4"
+                                        MinWidth="{TemplateBinding ActualWidth}"
+                                        MaxHeight="200">
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                        <ItemsPresenter/>
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="ComboBoxItem">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource Text}"/>
+            <Setter Property="FontFamily" Value="Consolas"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Padding" Value="8,6"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBoxItem">
+                        <Border x:Name="ItemBorder" Background="Transparent" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsHighlighted" Value="True">
+                                <Setter TargetName="ItemBorder" Property="Background" Value="#1A2A2A"/>
+                                <Setter Property="Foreground" Value="{StaticResource NeonCyan}"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="ItemBorder" Property="Background" Value="#0D1A1A"/>
+                                <Setter Property="Foreground" Value="{StaticResource NeonCyan}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- ===== GAMER TAB CONTROL ===== -->
+        <Style x:Key="GamerTabControl" TargetType="TabControl">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabControl">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0" Background="#08080D"
+                                    BorderBrush="{StaticResource Border}" BorderThickness="0,0,0,1">
+                                <TabPanel IsItemsHost="True" Margin="0"/>
+                            </Border>
+                            <ContentPresenter Grid.Row="1" ContentSource="SelectedContent"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="GamerTabItem" TargetType="TabItem">
+            <Setter Property="Foreground" Value="{StaticResource Muted}"/>
+            <Setter Property="FontFamily" Value="Consolas"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border x:Name="TabBorder" Padding="{TemplateBinding Padding}"
+                                BorderBrush="Transparent" BorderThickness="0,0,0,2" Margin="0,0,2,0">
+                            <ContentPresenter ContentSource="Header" VerticalAlignment="Center"
+                                              TextBlock.Foreground="{TemplateBinding Foreground}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="TabBorder" Property="BorderBrush" Value="{StaticResource NeonCyan}"/>
+                                <Setter Property="Foreground" Value="{StaticResource NeonCyan}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="{StaticResource Text}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
     </Window.Resources>
 
-    <Grid Margin="12">
+    <Grid Margin="12" Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="160"/>
         </Grid.RowDefinitions>
 
-        <!-- Header -->
-        <Border Grid.Row="0" Background="{StaticResource Header}" CornerRadius="10" Padding="12" Margin="0,0,0,10">
-            <DockPanel LastChildFill="False">
-                <TextBlock Text="Anti-BufferBloat Pro" FontSize="26" FontWeight="Black"/>
-                <Border Background="#202225" CornerRadius="8" Padding="8,4" DockPanel.Dock="Right">
-                    <TextBlock x:Name="txtProfile" Foreground="{StaticResource Accent}" FontWeight="Bold" Text="Perfil: Ninguno"/>
+        <!-- ===== HEADER GAMER ===== -->
+        <Border Grid.Row="0" Background="{StaticResource HeaderGradient}" CornerRadius="8" Padding="20,12" Margin="0,0,0,12"
+                BorderBrush="{StaticResource Border}" BorderThickness="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <!-- Logo -->
+                    <Image Source="pack://application:,,,/abp.png" Width="40" Height="40"
+                           Margin="0,0,14,0" RenderOptions.BitmapScalingMode="HighQuality">
+                        <Image.Effect>
+                            <DropShadowEffect BlurRadius="12" ShadowDepth="0" Opacity="0.5"
+                                              Color="{StaticResource NeonCyanColor}"/>
+                        </Image.Effect>
+                    </Image>
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock FontSize="20" FontWeight="Black" Foreground="{StaticResource Text}">
+                            <Run Text="ANTI-BUFFERBLOAT" Foreground="{StaticResource NeonCyan}"/>
+                            <Run Text=" PRO" Foreground="{StaticResource NeonMagenta}"/>
+                        </TextBlock>
+                        <TextBlock Text="NETWORK OPTIMIZER // LATENCY KILLER" FontSize="9" Foreground="{StaticResource Muted}" 
+                                   FontWeight="Bold" Margin="0,1,0,0" FontFamily="Consolas"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Update Badge + Status Bar -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+
+                <!-- Update Badge -->
+                <Border x:Name="UpdateBadge" Background="#F5B72E" CornerRadius="16" Padding="10,6"
+                        Margin="0,0,10,0" Visibility="Collapsed"
+                        MouseLeftButtonUp="UpdateBadge_Click" Cursor="Hand"
+                        ToolTip="Nueva versión disponible — haz click para actualizar">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="↑" Foreground="Black" VerticalAlignment="Center"
+                                   Margin="0,0,5,0" FontWeight="Bold" FontSize="13"/>
+                        <TextBlock x:Name="UpdateBadgeText" Text="v0.0.0 disponible"
+                                   Foreground="Black" VerticalAlignment="Center"
+                                   FontWeight="SemiBold" FontSize="12"/>
+                    </StackPanel>
                 </Border>
-            </DockPanel>
+
+                <!-- RGB Status Bar -->
+                <Border CornerRadius="6" Padding="14,8"
+                        BorderThickness="1">
+                    <Border.Background>
+                        <SolidColorBrush Color="#0A0A12"/>
+                    </Border.Background>
+                    <Border.BorderBrush>
+                        <SolidColorBrush Color="#1E1E2E"/>
+                    </Border.BorderBrush>
+                    <StackPanel Orientation="Horizontal">
+                        <!-- Indicador pulsante -->
+                        <Grid Margin="0,0,8,0" VerticalAlignment="Center">
+                            <Ellipse Width="8" Height="8" Fill="{StaticResource NeonGreen}" Opacity="0.3">
+                                <Ellipse.Triggers>
+                                    <EventTrigger RoutedEvent="Loaded">
+                                        <BeginStoryboard>
+                                            <Storyboard RepeatBehavior="Forever">
+                                                <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                 From="0.3" To="1" Duration="0:0:1" AutoReverse="True"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </Ellipse.Triggers>
+                            </Ellipse>
+                            <Ellipse Width="4" Height="4" Fill="{StaticResource NeonGreen}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                        <TextBlock x:Name="txtProfile" Foreground="{StaticResource NeonCyan}" FontWeight="Black" FontSize="12" 
+                                   Text="PERFIL: NINGUNO" VerticalAlignment="Center" FontFamily="Consolas"/>
+                    </StackPanel>
+                </Border>
+                </StackPanel>
+            </Grid>
         </Border>
 
-        <!-- Main -->
+        <!-- ===== CONTENIDO PRINCIPAL ===== -->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.5*"/>
                 <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-            <!-- Izquierda -->
-            <StackPanel Grid.Column="0">
-                <!-- Status -->
+            <!-- Panel izquierdo -->
+            <ScrollViewer Grid.Column="0" Grid.RowSpan="2" Margin="0,0,6,0"
+                          VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel>
+
+                <!-- Tarjeta de estado con borde neón superior -->
                 <Border Style="{StaticResource CardStyle}">
-                    <Grid>
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                            <TextBlock Text="◈" FontSize="14" Foreground="{StaticResource NeonCyan}" Margin="0,0,6,0" VerticalAlignment="Center"
+                                       Effect="{StaticResource CyanGlowSubtle}"/>
+                            <TextBlock Text="ESTADO DE CONEXIÓN" Style="{StaticResource SectionTitle}" Margin="0"/>
+                        </StackPanel>
+
+                        <!-- Gráfica con glow -->
+                        <Border CornerRadius="6" Padding="6" Margin="0,0,0,14"
+                                BorderBrush="{StaticResource Border}" BorderThickness="1">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#0A0A12" Offset="0"/>
+                                    <GradientStop Color="#06060C" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Grid>
+                                <Canvas x:Name="PingCanvas" Height="130"/>
+                                <TextBlock Text="LATENCY // MS" Foreground="{StaticResource Muted}" FontSize="9" FontWeight="Bold"
+                                           HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,4,6,0" 
+                                           FontFamily="Consolas" Opacity="0.6"/>
+                            </Grid>
+                        </Border>
+
+                        <!-- Grid de métricas con glow borders -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Ping - Highlight especial -->
+                            <Border Grid.Column="0" Grid.Row="0" CornerRadius="6" Padding="12,10" Margin="0,0,3,5"
+                                    BorderBrush="{StaticResource NeonCyanDim}" BorderThickness="1">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#001A1F" Offset="0"/>
+                                        <GradientStop Color="#0A0A12" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <StackPanel>
+                                    <TextBlock Text="⚡ PING" Style="{StaticResource MetricLabel}" FontFamily="Consolas"/>
+                                    <TextBlock x:Name="lblPing" Text="-- ms" Foreground="{StaticResource NeonCyan}" FontSize="20" FontWeight="Black"
+                                               FontFamily="Consolas" Effect="{StaticResource CyanGlowSubtle}"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Jitter -->
+                            <Border Grid.Column="1" Grid.Row="0" CornerRadius="6" Padding="12,10" Margin="3,0,0,5"
+                                    BorderBrush="{StaticResource NeonMagentaDim}" BorderThickness="1">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#1A0018" Offset="0"/>
+                                        <GradientStop Color="#0A0A12" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <StackPanel>
+                                    <TextBlock Text="📶 JITTER" Style="{StaticResource MetricLabel}" FontFamily="Consolas"/>
+                                    <TextBlock x:Name="lblJitter" Text="-- ms" Foreground="{StaticResource NeonMagenta}" FontSize="20" FontWeight="Black"
+                                               FontFamily="Consolas"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Auto-Tuning -->
+                            <Border Grid.Column="0" Grid.Row="1" Background="{StaticResource TertiaryBg}" CornerRadius="6" Padding="12,10" Margin="0,0,3,5"
+                                    BorderBrush="{StaticResource Border}" BorderThickness="1">
+                                <StackPanel>
+                                    <TextBlock Text="AUTO-TUNING" Style="{StaticResource MetricLabel}" FontFamily="Consolas"/>
+                                    <TextBlock x:Name="lblAuto" Text="--" Foreground="{StaticResource TextSecondary}" FontSize="13" FontWeight="Bold"
+                                               FontFamily="Consolas"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Packet Loss -->
+                            <Border Grid.Column="1" Grid.Row="1" Background="{StaticResource TertiaryBg}" CornerRadius="6" Padding="12,10" Margin="3,0,0,5"
+                                    BorderBrush="{StaticResource Border}" BorderThickness="1">
+                                <StackPanel>
+                                    <TextBlock Text="📉 PACKET LOSS" Style="{StaticResource MetricLabel}" FontFamily="Consolas"/>
+                                    <TextBlock x:Name="lblPacketLoss" Text="--%%" Foreground="{StaticResource TextSecondary}" FontSize="13" FontWeight="Bold"
+                                               FontFamily="Consolas"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- IP Externa -->
+                            <Border Grid.Column="0" Grid.Row="2" Background="{StaticResource TertiaryBg}" CornerRadius="6" Padding="12,10" Margin="0,0,3,5"
+                                    BorderBrush="{StaticResource Border}" BorderThickness="1">
+                                <StackPanel>
+                                    <TextBlock Text="IP EXTERNA" Style="{StaticResource MetricLabel}" FontFamily="Consolas"/>
+                                    <TextBlock x:Name="lblIpExt" Text="--" Foreground="{StaticResource TextSecondary}" FontSize="12"
+                                               FontFamily="Consolas"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- RSS -->
+                            <Border Grid.Column="1" Grid.Row="2" Background="{StaticResource TertiaryBg}" CornerRadius="6" Padding="12,10" Margin="3,0,0,5"
+                                    BorderBrush="{StaticResource Border}" BorderThickness="1">
+                                <StackPanel>
+                                    <TextBlock Text="RSS STATE" Style="{StaticResource MetricLabel}" FontFamily="Consolas"/>
+                                    <TextBlock x:Name="lblRss" Text="--" Foreground="{StaticResource TextSecondary}" FontSize="13" FontWeight="Bold"
+                                               FontFamily="Consolas"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- IP Interna -->
+                            <Border Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Background="{StaticResource TertiaryBg}" CornerRadius="6" Padding="12,10"
+                                    Margin="0,0,0,5" BorderBrush="{StaticResource Border}" BorderThickness="1">
+                                <StackPanel>
+                                    <TextBlock Text="IP INTERNA" Style="{StaticResource MetricLabel}" FontFamily="Consolas"/>
+                                    <TextBlock x:Name="lblIpInt" Text="--" Foreground="{StaticResource TextSecondary}" FontSize="12"
+                                               FontFamily="Consolas"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Ping Stats: Min / Avg / Max -->
+                            <Border Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" CornerRadius="6" Padding="12,10"
+                                    BorderBrush="{StaticResource BorderSubtle}" BorderThickness="1">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Color="#0A0F0A" Offset="0"/>
+                                        <GradientStop Color="#0A0A12" Offset="0.5"/>
+                                        <GradientStop Color="#120A0A" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                                        <TextBlock Text="MIN" Style="{StaticResource MetricLabel}" FontFamily="Consolas" HorizontalAlignment="Center"/>
+                                        <TextBlock x:Name="lblPingMin" Text="-- ms" Foreground="{StaticResource NeonGreen}" FontSize="13" FontWeight="Bold"
+                                                   FontFamily="Consolas" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" HorizontalAlignment="Center">
+                                        <TextBlock Text="AVG" Style="{StaticResource MetricLabel}" FontFamily="Consolas" HorizontalAlignment="Center"/>
+                                        <TextBlock x:Name="lblPingAvg" Text="-- ms" Foreground="{StaticResource NeonCyan}" FontSize="13" FontWeight="Bold"
+                                                   FontFamily="Consolas" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2" HorizontalAlignment="Center">
+                                        <TextBlock Text="MAX" Style="{StaticResource MetricLabel}" FontFamily="Consolas" HorizontalAlignment="Center"/>
+                                        <TextBlock x:Name="lblPingMax" Text="-- ms" Foreground="{StaticResource NeonRed}" FontSize="13" FontWeight="Bold"
+                                                   FontFamily="Consolas" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Ajustes rápidos -->
+                <Border Style="{StaticResource CardStyle}" Margin="0,8,0,0">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                            <TextBlock Text="◈" FontSize="14" Foreground="{StaticResource NeonMagenta}" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="AJUSTES RÁPIDOS" Style="{StaticResource SectionTitle}" Foreground="{StaticResource NeonMagenta}" Margin="0"/>
+                        </StackPanel>
+
+                        <CheckBox x:Name="tgRss"  Content="RSS (Receive Side Scaling)"
+                                  Style="{StaticResource ToggleCheckBox}"
+                                  Checked="tgRss_Checked" Unchecked="tgRss_Unchecked"/>
+                        <CheckBox x:Name="tgAuto" Content="Auto-Tuning ventana de recepción"
+                                  Style="{StaticResource ToggleCheckBox}"
+                                  Checked="tgAuto_Checked" Unchecked="tgAuto_Unchecked"/>
+
+                        <Border Background="{StaticResource Border}" Height="1" Margin="0,8" Opacity="0.5"/>
+
+                        <CheckBox x:Name="tgTray" Content="Ejecutar en bandeja del sistema"
+                                  Style="{StaticResource ToggleCheckBox}"
+                                  Checked="tgTray_Checked" Unchecked="tgTray_Unchecked"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+            </ScrollViewer>
+
+            <!-- Panel derecho con tabs -->
+            <TabControl x:Name="MainTabControl" Grid.Column="1" Grid.RowSpan="2" Style="{StaticResource GamerTabControl}" Margin="6,0,0,0"
+                        SelectionChanged="MainTabControl_SelectionChanged">
+
+                <!-- ═══ TAB 1: OPTIMIZAR ═══ -->
+                <TabItem Header="OPTIMIZAR" Style="{StaticResource GamerTabItem}">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="0,8,0,0">
+
+                            <!-- Perfiles -->
+                            <Border Style="{StaticResource CardStyle}">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
+                                        <TextBlock Text="◈" FontSize="14" Foreground="{StaticResource NeonAmber}" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                        <TextBlock Text="PERFILES" Style="{StaticResource SectionTitle}" Foreground="{StaticResource NeonAmber}" Margin="0"/>
+                                    </StackPanel>
+                                    <UniformGrid Columns="2" Rows="1">
+                                        <Button x:Name="btnGaming" Style="{StaticResource SecondaryBtn}" Margin="0,0,4,0"
+                                                Click="btnGaming_Click" Height="64"
+                                                ToolTip="Latencia mínima: Nagle OFF, Auto-Tuning restricted, timestamps OFF, InitialRTO 1s">
+                                            <StackPanel>
+                                                <TextBlock Text="🎮" FontSize="22" HorizontalAlignment="Center"/>
+                                                <TextBlock Text="GAMING" FontSize="9" FontWeight="Black" HorizontalAlignment="Center"
+                                                           Foreground="{StaticResource TextSecondary}" FontFamily="Consolas"/>
+                                            </StackPanel>
+                                        </Button>
+                                        <Button x:Name="btnReset" Style="{StaticResource SecondaryBtn}" Margin="4,0,0,0"
+                                                Click="btnReset_Click" Height="64"
+                                                ToolTip="Restaura todos los parámetros TCP a los valores por defecto de Windows">
+                                            <StackPanel>
+                                                <TextBlock Text="↺" FontSize="22" HorizontalAlignment="Center"/>
+                                                <TextBlock Text="RESET" FontSize="9" FontWeight="Black" HorizontalAlignment="Center"
+                                                           Foreground="{StaticResource TextSecondary}" FontFamily="Consolas"/>
+                                            </StackPanel>
+                                        </Button>
+                                    </UniformGrid>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- PC Gaming Boost -->
+                            <Border Style="{StaticResource CardStyle}" Margin="0,8,0,0">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                                        <TextBlock Text="◈" FontSize="14" Foreground="{StaticResource NeonCyan}" Margin="0,0,6,0" VerticalAlignment="Center"
+                                                   Effect="{StaticResource CyanGlowSubtle}"/>
+                                        <TextBlock Text="PC GAMING BOOST" Style="{StaticResource SectionTitle}" Foreground="{StaticResource NeonCyan}" Margin="0"/>
+                                    </StackPanel>
+                                    <CheckBox x:Name="tgPowerPlan" Content="Ultimate Performance (plan de energía)"
+                                              Style="{StaticResource ToggleCheckBox}"
+                                              Checked="tgPowerPlan_Checked" Unchecked="tgPowerPlan_Unchecked"/>
+                                    <CheckBox x:Name="tgXboxDvr" Content="Xbox DVR deshabilitado"
+                                              Style="{StaticResource ToggleCheckBox}"
+                                              Checked="tgXboxDvr_Checked" Unchecked="tgXboxDvr_Unchecked"/>
+                                    <Border Background="{StaticResource Border}" Height="1" Margin="0,8" Opacity="0.5"/>
+                                    <Grid Margin="0,0,0,10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock Text="GPU HARDWARE SCHEDULING (HAGS)" Style="{StaticResource MetricLabel}" FontFamily="Consolas"/>
+                                            <TextBlock x:Name="lblHags" Text="Leyendo..." Foreground="{StaticResource TextSecondary}"
+                                                       FontSize="12" FontFamily="Consolas" FontWeight="Bold"/>
+                                        </StackPanel>
+                                    </Grid>
+                                    <Button Content="🛡 Añadir exclusión Defender" Style="{StaticResource SecondaryBtn}"
+                                            Click="AddDefenderExclusion_Click" HorizontalAlignment="Stretch"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Acciones TCP -->
+                            <Border Style="{StaticResource CardStyle}" Margin="0,8,0,0">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
+                                        <TextBlock Text="◈" FontSize="14" Foreground="{StaticResource NeonGreen}" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                        <TextBlock Text="ACCIONES TCP" Style="{StaticResource SectionTitle}" Foreground="{StaticResource NeonGreen}" Margin="0"/>
+                                    </StackPanel>
+                                    <UniformGrid Grid.Row="1" Columns="3" Rows="3">
+                                        <Button Content="✅ Auto-Tuning NORMAL"      Style="{StaticResource SecondaryBtn}" Margin="3" Click="NormalAuto_Click"/>
+                                        <Button Content="⚡ Auto-Tuning RESTRICTED"  Style="{StaticResource SecondaryBtn}" Margin="3" Click="RestrictedAuto_Click"/>
+                                        <Button Content="🚫 Auto-Tuning OFF"         Style="{StaticResource SecondaryBtn}" Margin="3" Click="DisableAuto_Click"/>
+                                        <Button Content="✅ RSS ON"           Style="{StaticResource SecondaryBtn}" Margin="3" Click="EnableRss_Click"/>
+                                        <Button Content="⛔ RSS OFF"          Style="{StaticResource SecondaryBtn}" Margin="3" Click="DisableRss_Click"/>
+                                        <Button Content="💾 Backup TCP"       Style="{StaticResource SecondaryBtn}" Margin="3" Click="Backup_Click"/>
+                                        <Button Content="♻️ Restore TCP"      Style="{StaticResource SecondaryBtn}" Margin="3" Click="Restore_Click"/>
+                                        <Button Content="🩺 Diagnóstico"      Style="{StaticResource SecondaryBtn}" Margin="3" Click="Diag_Click"/>
+                                    </UniformGrid>
+                                </Grid>
+                            </Border>
+
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
+
+                <!-- ═══ TAB 2: TEST BUFFERBLOAT ═══ -->
+                <TabItem Header="⚡ TEST BUFFERBLOAT" Style="{StaticResource GamerTabItem}">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="0,8,0,0">
+
+                            <!-- Control del test -->
+                            <Border Style="{StaticResource CardStyle}" Margin="0,0,0,8">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
+                                        <TextBlock Text="◈" FontSize="14" Foreground="{StaticResource NeonCyan}" Margin="0,0,6,0"
+                                                   VerticalAlignment="Center" Effect="{StaticResource CyanGlowSubtle}"/>
+                                        <TextBlock Text="BUFFERBLOAT TEST" Style="{StaticResource SectionTitle}" Foreground="{StaticResource NeonCyan}" Margin="0"/>
+                                    </StackPanel>
+                                    <TextBlock Text="3 fases (Idle · Download · Upload) de 20s cada una — ~60s en total."
+                                               Foreground="{StaticResource Muted}" FontFamily="Consolas" FontSize="10" Margin="0,0,0,14"/>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
+                                        <Button x:Name="btnAnalyze" Content="⚡ ANALIZAR CONEXIÓN"
+                                                Style="{StaticResource PrimaryBtn}" Click="btnAnalyze_Click" MinWidth="180"/>
+                                        <Button x:Name="btnCancelTest" Content="✕ CANCELAR"
+                                                Style="{StaticResource SecondaryBtn}" Margin="8,0,0,0"
+                                                Click="btnCancelTest_Click" Visibility="Collapsed"/>
+                                    </StackPanel>
+                                    <ProgressBar x:Name="pbTest" Minimum="0" Maximum="100" Height="6" Margin="0,0,0,8"
+                                                 Foreground="{StaticResource NeonCyan}" Background="{StaticResource Border}"
+                                                 BorderThickness="0" Value="0"/>
+                                    <DockPanel>
+                                        <TextBlock x:Name="lblTestPhase" Text="LISTO"
+                                                   Foreground="{StaticResource NeonCyan}" FontFamily="Consolas" FontSize="11" FontWeight="Bold"/>
+                                        <TextBlock x:Name="lblTestDetail" Text="  Presiona ANALIZAR para iniciar"
+                                                   Foreground="{StaticResource TextSecondary}" FontFamily="Consolas" FontSize="11"/>
+                                    </DockPanel>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Grade + Resumen -->
+                            <Border x:Name="pnlResult" Style="{StaticResource CardStyle}" Margin="0,0,0,8" Visibility="Collapsed">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border x:Name="gradeBox" Grid.Column="0" Width="80" Height="80" CornerRadius="8" Margin="0,0,18,0"
+                                            BorderBrush="{StaticResource Border}" BorderThickness="1">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                <GradientStop Color="#001A1F" Offset="0"/>
+                                                <GradientStop Color="#0A0A12" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <TextBlock x:Name="lblGrade" Text="--" FontSize="42" FontWeight="Black"
+                                                       FontFamily="Consolas" Foreground="{StaticResource NeonCyan}"
+                                                       HorizontalAlignment="Center" Effect="{StaticResource CyanGlowSubtle}"/>
+                                            <TextBlock Text="GRADE" Foreground="{StaticResource Muted}" FontSize="9"
+                                                       FontWeight="Bold" FontFamily="Consolas" HorizontalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Border>
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                                            <TextBlock Text="CUELLO: " Foreground="{StaticResource Muted}" FontFamily="Consolas" FontSize="11" FontWeight="Bold"/>
+                                            <TextBlock x:Name="lblBottleneck" Text="--" Foreground="{StaticResource Text}" FontFamily="Consolas" FontSize="11" FontWeight="Bold"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                            <TextBlock Text="PEOR AUMENTO: " Foreground="{StaticResource Muted}" FontFamily="Consolas" FontSize="11" FontWeight="Bold"/>
+                                            <TextBlock x:Name="lblWorstIncrease" Text="-- ms" Foreground="{StaticResource TextSecondary}" FontFamily="Consolas" FontSize="11"/>
+                                        </StackPanel>
+                                        <TextBlock x:Name="lblTestSummary" Text="" Foreground="{StaticResource TextSecondary}"
+                                                   FontFamily="Consolas" FontSize="11" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+
+                            <!-- Resultados por fase -->
+                            <Border x:Name="pnlPhases" Style="{StaticResource CardStyle}" Margin="0,0,0,8" Visibility="Collapsed">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                                        <TextBlock Text="◈" FontSize="14" Foreground="{StaticResource NeonGreen}" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                        <TextBlock Text="RESULTADOS POR FASE" Style="{StaticResource SectionTitle}" Foreground="{StaticResource NeonGreen}" Margin="0"/>
+                                    </StackPanel>
+                                    <UniformGrid Columns="3">
+                                        <!-- IDLE -->
+                                        <Border CornerRadius="6" Padding="12,10" Margin="0,0,4,0"
+                                                BorderBrush="{StaticResource Border}" BorderThickness="1"
+                                                Background="{DynamicResource CardElevated}">
+                                            <StackPanel>
+                                                <TextBlock Text="IDLE" Foreground="{StaticResource Muted}" FontFamily="Consolas" FontSize="10" FontWeight="Bold" Margin="0,0,0,8"/>
+                                                <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                                    <TextBlock Text="AVG    " Foreground="{StaticResource Muted}" FontFamily="Consolas" FontSize="11"/>
+                                                    <TextBlock x:Name="lblIdleAvg" Text="-- ms" Foreground="{StaticResource Text}" FontFamily="Consolas" FontSize="11" FontWeight="Bold"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                                    <TextBlock Text="P95    " Foreground="{StaticResource Muted}" FontFamily="Consolas" FontSize="11"/>
+                                                    <TextBlock x:Name="lblIdleP95" Text="-- ms" Foreground="{StaticResource Text}" FontFamily="Consolas" FontSize="11" FontWeight="Bold"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                                    <TextBlock Text="JITTER " Foreground="{StaticResource Muted}" FontFamily="Consolas" FontSize="11"/>
+                                                    <TextBlock x:Name="lblIdleJitter" Text="-- ms" Foreground="{StaticResource Text}" FontFamily="Consolas" FontSize="11" FontWeight="Bold"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="LOSS   " Foreground="{StaticResource Muted}" FontFamily="Consolas" FontSize="11"/>
+                                                    <TextBlock x:Name="lblIdleLoss" Text="--%%" Foreground="{StaticResource Text}" FontFamily="Consolas" FontSize="11" FontWeight="Bold"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </Border>
+                                        <!-- DOWNLOAD -->
+                                        <Border CornerRadius="6" Padding="12,10" Margin="2,0,2,0"
+                                                BorderBrush="{StaticResource Border}" BorderThickness="1"
+                                                Background="{DynamicResource CardElevated}">
+                                            <StackPanel>
+                                                <TextBlock Text="DOWNLOAD" Foreground="{StaticResource NeonCyanDim}" FontFamily="Consolas" FontSize="10" FontWeight="Bold" Margin="0,0,0,8"/>
+                                                <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                                    <TextBlock Text="AVG    " Foreground="{StaticResource Muted}" FontFamily="Consolas" FontSize="11"/>
+                                                    <TextBlock x:Name="lblDlAvg" Text="-- ms" Foreground="{StaticResource Text}" FontFamily="Consolas" FontSize="11" FontWeight="Bold"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                                    <TextBlock Text="P95    " Foreground="{StaticResource Muted}" FontFamily="Consolas" FontSize="11"/>
+                                                    <TextBlock x:Name="lblDlP95" Text="-- ms" Foreground="{StaticResource Text}" FontFamily="Consolas" FontSize="11" FontWeight="Bold"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                                    <TextBlock Text="JITTER " Foreground="{StaticResource Muted}" FontFamily="Consolas" FontSize="11"/>
+                                                    <TextBlock x:Name="lblDlJitter" Text="-- ms" Foreground="{StaticResource Text}" FontFamily="Consolas" FontSize="11" FontWeight="Bold"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                                    <TextBlock Text="LOSS   " Foreground="{StaticResource Muted}" FontFamily="Consolas" FontSize="11"/>
+                                                    <TextBlock x:Name="lblDlLoss" Text="--%%" Foreground="{StaticResource Text}" FontFamily="Consolas" FontSize="11" FontWeight="Bold"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="SPEED  " Foreground="{StaticResource Muted}" FontFamily="Consolas" FontSize="11"/>
+                                                    <TextBlock x:Name="lblDlSpeed" Text="-- Mbps" Foreground="{StaticResource NeonCyan}" FontFamily="Consolas" FontSize="11" FontWeight="Bold"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </Border>
+                                        <!-- UPLOAD -->
+                                        <Border CornerRadius="6" Padding="12,10" Margin="4,0,0,0"
+                                                BorderBrush="{StaticResource Border}" BorderThickness="1"
+                                                Background="{DynamicResource CardElevated}">
+                                            <StackPanel>
+                                                <TextBlock Text="UPLOAD" Foreground="{StaticResource NeonMagentaDim}" FontFamily="Consolas" FontSize="10" FontWeight="Bold" Margin="0,0,0,8"/>
+                                                <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                                    <TextBlock Text="AVG    " Foreground="{StaticResource Muted}" FontFamily="Consolas" FontSize="11"/>
+                                                    <TextBlock x:Name="lblUlAvg" Text="-- ms" Foreground="{StaticResource Text}" FontFamily="Consolas" FontSize="11" FontWeight="Bold"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                                    <TextBlock Text="P95    " Foreground="{StaticResource Muted}" FontFamily="Consolas" FontSize="11"/>
+                                                    <TextBlock x:Name="lblUlP95" Text="-- ms" Foreground="{StaticResource Text}" FontFamily="Consolas" FontSize="11" FontWeight="Bold"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                                    <TextBlock Text="JITTER " Foreground="{StaticResource Muted}" FontFamily="Consolas" FontSize="11"/>
+                                                    <TextBlock x:Name="lblUlJitter" Text="-- ms" Foreground="{StaticResource Text}" FontFamily="Consolas" FontSize="11" FontWeight="Bold"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                                    <TextBlock Text="LOSS   " Foreground="{StaticResource Muted}" FontFamily="Consolas" FontSize="11"/>
+                                                    <TextBlock x:Name="lblUlLoss" Text="--%%" Foreground="{StaticResource Text}" FontFamily="Consolas" FontSize="11" FontWeight="Bold"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="SPEED  " Foreground="{StaticResource Muted}" FontFamily="Consolas" FontSize="11"/>
+                                                    <TextBlock x:Name="lblUlSpeed" Text="-- Mbps" Foreground="{StaticResource NeonMagenta}" FontFamily="Consolas" FontSize="11" FontWeight="Bold"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </Border>
+                                    </UniformGrid>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Recomendación + Export -->
+                            <Border x:Name="pnlRecommendation" Style="{StaticResource CardStyle}" Visibility="Collapsed">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                                        <TextBlock Text="◈" FontSize="14" Foreground="{StaticResource NeonAmber}" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                        <TextBlock Text="RECOMENDACIÓN" Style="{StaticResource SectionTitle}" Foreground="{StaticResource NeonAmber}" Margin="0"/>
+                                    </StackPanel>
+                                    <TextBlock x:Name="lblRecommendation" Text="" Foreground="{StaticResource TextSecondary}"
+                                               FontFamily="Consolas" FontSize="11" TextWrapping="Wrap" Margin="0,0,0,14"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button x:Name="btnCopyResult" Content="📋 Copiar resultado"
+                                                Style="{StaticResource SecondaryBtn}" Click="btnCopyResult_Click" Margin="0,0,8,0"/>
+                                        <Button x:Name="btnExportJson" Content="💾 Exportar JSON"
+                                                Style="{StaticResource SecondaryBtn}" Click="btnExportJson_Click"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
+
+                <!-- ═══ TAB 3: HISTORIAL ═══ -->
+                <TabItem Header="📋 HISTORIAL" Style="{StaticResource GamerTabItem}">
+                    <Grid Margin="0,8,0,0">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="160"/>
+                            <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <TextBlock Text="Status" Foreground="{StaticResource Muted}" FontSize="16" Margin="0,0,0,8"/>
+                        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+                            <StackPanel x:Name="historyList" Margin="0,0,0,8">
+                                <TextBlock x:Name="lblHistoryEmpty" Text="No hay tests guardados aún."
+                                           Foreground="{StaticResource Muted}" FontFamily="Consolas" FontSize="12"
+                                           HorizontalAlignment="Center" Margin="0,40,0,0"/>
+                            </StackPanel>
+                        </ScrollViewer>
 
-                        <!-- Gráfica -->
-                        <Border Grid.Row="1" Background="#26282E" CornerRadius="8" Padding="4" Margin="0,4,0,10">
-                            <Canvas x:Name="PingCanvas" Height="150"/>
+                        <Border Grid.Row="1" BorderBrush="{StaticResource Border}" BorderThickness="0,1,0,0" Padding="0,10,0,0">
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="🔄 Actualizar" Style="{StaticResource SecondaryBtn}" Click="btnHistoryRefresh_Click" Margin="0,0,8,0"/>
+                                <Button Content="🗑 Limpiar historial" Style="{StaticResource SecondaryBtn}"
+                                        Click="btnHistoryClear_Click" Foreground="{StaticResource NeonRed}"/>
+                            </StackPanel>
                         </Border>
-
-                        <!-- Datos -->
-                        <StackPanel Grid.Row="2">
-                            <TextBlock x:Name="lblPing"   Text="Ping: -- ms"     Foreground="{StaticResource Success}" FontSize="15" Style="{StaticResource StackChildSpacing}"/>
-                            <TextBlock x:Name="lblIpExt"  Text="IP Ext: --"       Foreground="{StaticResource Muted}" FontSize="14" Style="{StaticResource StackChildSpacing}"/>
-                            <TextBlock x:Name="lblIpInt"  Text="IP Int: --"       Foreground="{StaticResource Muted}" FontSize="14" Style="{StaticResource StackChildSpacing}"/>
-                            <TextBlock x:Name="lblAuto"   Text="Auto-Tuning: --"  Foreground="{StaticResource Muted}" FontSize="14" Style="{StaticResource StackChildSpacing}"/>
-                            <TextBlock x:Name="lblRss"    Text="RSS: --"          Foreground="{StaticResource Muted}" FontSize="14" Style="{StaticResource StackChildSpacing}"/>
-                        </StackPanel>
                     </Grid>
-                </Border>
+                </TabItem>
 
-                <!-- Toggles -->
-                <Border Style="{StaticResource CardStyle}" Margin="0,12,0,0">
-                    <StackPanel>
-                        <TextBlock Text="Ajustes rápidos" Foreground="{StaticResource Muted}" FontSize="16" Margin="0,0,0,8"/>
-                        <UniformGrid Columns="2">
-                            <CheckBox x:Name="tgEcn"  Content="ECN"         Foreground="{StaticResource Text}" Margin="0,6"
-                                      Checked="tgEcn_Checked" Unchecked="tgEcn_Unchecked"/>
-                            <CheckBox x:Name="tgRss"  Content="RSS"         Foreground="{StaticResource Text}" Margin="0,6"
-                                      Checked="tgRss_Checked" Unchecked="tgRss_Unchecked"/>
-                            <CheckBox x:Name="tgAuto" Content="Auto-Tuning" Foreground="{StaticResource Text}" Margin="0,6"
-                                      Checked="tgAuto_Checked" Unchecked="tgAuto_Unchecked"/>
-                            <CheckBox x:Name="tgTray" Content="Tray Mode"   Foreground="{StaticResource Text}" Margin="0,6"
-                                      Checked="tgTray_Checked" Unchecked="tgTray_Unchecked"/>
-                        </UniformGrid>
-                    </StackPanel>
-                </Border>
-            </StackPanel>
+                <!-- ═══ TAB 4: CONFIG ═══ -->
+                <TabItem Header="⚙ CONFIG" Style="{StaticResource GamerTabItem}">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="0,8,0,0">
 
-            <!-- Derecha -->
-            <StackPanel Grid.Column="1">
-                <!-- Perfiles -->
-                <Border Style="{StaticResource CardStyle}" Width="553">
-                    <StackPanel>
-                        <TextBlock Text="Perfiles" Foreground="{StaticResource Muted}" FontSize="16"/>
-                        <UniformGrid Columns="3" Margin="0,10,0,0">
-                            <!-- Por defecto grises; el activo se pinta Accent -->
-                            <Button x:Name="btnGaming"    Content="Gaming"       Style="{StaticResource SecondaryBtn}" Margin="6" Click="btnGaming_Click"/>
-                            <Button x:Name="btnStreaming" Content="Streaming"    Style="{StaticResource SecondaryBtn}" Margin="6" Click="btnStreaming_Click"/>
-                            <Button x:Name="btnBrowsing"  Content="Web Browsing" Style="{StaticResource SecondaryBtn}" Margin="6" Click="btnBrowsing_Click"/>
-                        </UniformGrid>
-                    </StackPanel>
-                </Border>
+                            <!-- Test -->
+                            <Border Style="{StaticResource CardStyle}" Margin="0,0,0,8">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
+                                        <TextBlock Text="◈" FontSize="14" Foreground="{StaticResource NeonCyan}" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                        <TextBlock Text="PARÁMETROS DEL TEST" Style="{StaticResource SectionTitle}" Foreground="{StaticResource NeonCyan}" Margin="0"/>
+                                    </StackPanel>
 
-                <!-- Acciones -->
-                <Border Style="{StaticResource CardStyle}" Margin="0,12,0,0" Width="560">
-                    <UniformGrid Columns="3">
-                        <Button Content="Normal Auto-Tuning" Style="{StaticResource SecondaryBtn}" Margin="6" Click="NormalAuto_Click"/>
-                        <Button Content="Disable Auto-Tuning" Style="{StaticResource SecondaryBtn}" Margin="6" Click="DisableAuto_Click"/>
-                        <Button Content="Enable RSS"           Style="{StaticResource SecondaryBtn}" Margin="6" Click="EnableRss_Click"/>
-                        <Button Content="Disable RSS"          Style="{StaticResource SecondaryBtn}" Margin="6" Click="DisableRss_Click"/>
-                        <Button Content="Backup TCP"           Style="{StaticResource SecondaryBtn}" Margin="6" Click="Backup_Click"/>
-                        <Button Content="Restore TCP"          Style="{StaticResource SecondaryBtn}" Margin="6" Click="Restore_Click"/>
-                        <Button Content="Diagnóstico"          Style="{StaticResource SecondaryBtn}" Margin="6" Click="Diag_Click"/>
-                        <Button Content="Speedtest.net"        Style="{StaticResource PrimaryBtn}"   Margin="6" Click="Speedtest_Click"/>
-                        <Button Content="BufferBloat Test"     Style="{StaticResource PrimaryBtn}"   Margin="6" Click="Bufferbloat_Click"/>
-                    </UniformGrid>
-                </Border>
-            </StackPanel>
+                                    <Grid Margin="0,0,0,12">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="160"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="Duración por fase:" Foreground="{StaticResource TextSecondary}"
+                                                   FontFamily="Consolas" FontSize="12" VerticalAlignment="Center"/>
+                                        <ComboBox x:Name="cbPhaseDuration" Grid.Column="1" SelectedIndex="1">
+                                            <ComboBoxItem Content="10 segundos" Tag="10"/>
+                                            <ComboBoxItem Content="20 segundos (recomendado)" Tag="20"/>
+                                            <ComboBoxItem Content="30 segundos" Tag="30"/>
+                                        </ComboBox>
+                                    </Grid>
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="160"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="Ping target:" Foreground="{StaticResource TextSecondary}"
+                                                   FontFamily="Consolas" FontSize="12" VerticalAlignment="Center"/>
+                                        <TextBox x:Name="txtPingTarget" Grid.Column="1" Text="1.1.1.1"
+                                                 Background="{DynamicResource CardElevated}" Foreground="{StaticResource Text}"
+                                                 BorderBrush="{StaticResource Border}" FontFamily="Consolas" FontSize="12"
+                                                 Padding="8,5" BorderThickness="1" CaretBrush="{StaticResource NeonCyan}"/>
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Apariencia -->
+                            <Border Style="{StaticResource CardStyle}" Margin="0,0,0,8">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
+                                        <TextBlock Text="◈" FontSize="14" Foreground="{StaticResource NeonMagenta}" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                        <TextBlock Text="APARIENCIA" Style="{StaticResource SectionTitle}" Foreground="{StaticResource NeonMagenta}" Margin="0"/>
+                                    </StackPanel>
+                                    <CheckBox x:Name="tgDimMode" Content="Modo Dim (fondo más claro)"
+                                              Style="{StaticResource ToggleCheckBox}"
+                                              Checked="tgDimMode_Checked" Unchecked="tgDimMode_Unchecked"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Guardar -->
+                            <Button Content="💾 Guardar configuración" Style="{StaticResource PrimaryBtn}"
+                                    Click="btnSaveConfig_Click" HorizontalAlignment="Left"/>
+
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
+
+            </TabControl>
         </Grid>
 
-        <!-- Log -->
-        <Border Grid.Row="2" Background="{StaticResource ConsoleBg}" CornerRadius="10" Padding="6" Margin="0,12,0,0" BorderBrush="{StaticResource Border}" BorderThickness="1">
-            <TextBox x:Name="txtLog"
-                 Text="> Log de comandos aparecerá aquí..."
-                 Background="{StaticResource ConsoleBg}"
-                 Foreground="{StaticResource ConsoleFg}"
-                 FontFamily="Consolas" FontSize="12"
-                 TextWrapping="Wrap" AcceptsReturn="True"
-                 VerticalScrollBarVisibility="Auto" Height="120"
-                 IsReadOnly="True" BorderThickness="0"/>
+        <!-- ===== CONSOLA HACKER ===== -->
+        <Border Grid.Row="2" CornerRadius="8"
+                Margin="0,12,0,0" BorderBrush="{StaticResource Border}" BorderThickness="1">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#05050A" Offset="0"/>
+                    <GradientStop Color="#08080E" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Barra de título consola -->
+                <Border CornerRadius="8,8,0,0" Padding="14,7"
+                        BorderBrush="{StaticResource Border}" BorderThickness="0,0,0,1">
+                    <Border.Background>
+                        <SolidColorBrush Color="#08080D"/>
+                    </Border.Background>
+                    <DockPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Border Width="10" Height="10" CornerRadius="2" Background="{StaticResource NeonRed}" Margin="0,0,5,0" Opacity="0.8"/>
+                            <Border Width="10" Height="10" CornerRadius="2" Background="{StaticResource NeonAmber}" Margin="0,0,5,0" Opacity="0.8"/>
+                            <Border Width="10" Height="10" CornerRadius="2" Background="{StaticResource NeonGreen}" Margin="0,0,12,0" Opacity="0.8"/>
+                            <TextBlock Text="TERMINAL" Foreground="{StaticResource NeonGreen}" FontWeight="Bold" FontSize="10"
+                                       VerticalAlignment="Center" FontFamily="Consolas" Opacity="0.7"/>
+                            <TextBlock Text=" // OUTPUT LOG" Foreground="{StaticResource Muted}" FontWeight="Bold" FontSize="10"
+                                       VerticalAlignment="Center" FontFamily="Consolas" Opacity="0.5"/>
+                        </StackPanel>
+                        <Button x:Name="btnToggleConsole" Content="▲"
+                                Foreground="{StaticResource NeonCyan}" Background="Transparent"
+                                BorderThickness="0" Padding="8,2" FontSize="11" FontWeight="Bold"
+                                DockPanel.Dock="Right" Click="btnToggleConsole_Click"
+                                ToolTip="Expandir/Contraer consola" Cursor="Hand"
+                                HorizontalAlignment="Right"/>
+                    </DockPanel>
+                </Border>
+
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Name="consoleScrollViewer">
+                    <TextBox x:Name="txtLog"
+                             Text="> [SYS] Inicializado. Listo para optimizar conexión..."
+                             Background="Transparent"
+                             Foreground="{StaticResource ConsoleFg}"
+                             FontFamily="Cascadia Code, Consolas, Courier New"
+                             FontSize="11"
+                             TextWrapping="Wrap" AcceptsReturn="True"
+                             IsReadOnly="True" BorderThickness="0"
+                             Padding="14,10"
+                             CaretBrush="{StaticResource ConsoleFg}"/>
+                </ScrollViewer>
+            </Grid>
         </Border>
     </Grid>
 </Window>

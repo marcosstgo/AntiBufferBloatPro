@@ -1,0 +1,62 @@
+<Window x:Class="AntiBufferBloatPro.UpdateWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Actualización disponible"
+        Width="420" Height="260"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Background="#0A0A0F"
+        BorderBrush="#1E1E2E" BorderThickness="1">
+
+    <Grid Margin="28,24,28,24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Título -->
+        <TextBlock Grid.Row="0" FontSize="16" FontWeight="Black" Margin="0,0,0,6">
+            <Run Text="ACTUALIZACIÓN" Foreground="#00F0FF"/>
+            <Run Text=" DISPONIBLE" Foreground="#FF00E5"/>
+        </TextBlock>
+
+        <!-- Versiones -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,16">
+            <TextBlock x:Name="TxtCurrentVer" Foreground="#9999B0" FontFamily="Consolas" FontSize="12"/>
+            <TextBlock Text="  →  " Foreground="#555570" FontFamily="Consolas" FontSize="12"/>
+            <TextBlock x:Name="TxtNewVer" Foreground="#00F0FF" FontFamily="Consolas" FontSize="12" FontWeight="Bold"/>
+        </StackPanel>
+
+        <!-- Barra de progreso -->
+        <ProgressBar x:Name="ProgressBar" Grid.Row="2" Height="6" Minimum="0" Maximum="100"
+                     Margin="0,0,0,8" Visibility="Collapsed"
+                     Background="#1E1E2E" Foreground="#00F0FF"/>
+
+        <!-- Estado -->
+        <TextBlock x:Name="TxtStatus" Grid.Row="3" Foreground="#9999B0"
+                   FontSize="11" FontFamily="Consolas" TextWrapping="Wrap"
+                   Text="¿Deseas descargar e instalar la nueva versión?"/>
+
+        <!-- Banner éxito -->
+        <Border x:Name="SuccessBanner" Grid.Row="3" Background="#0D2E1A" CornerRadius="6"
+                Padding="12,8" Visibility="Collapsed">
+            <TextBlock Text="✓ Descarga completada. La app se reiniciará."
+                       Foreground="#00FF88" FontFamily="Consolas" FontSize="11"/>
+        </Border>
+
+        <!-- Botones -->
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,14,0,0">
+            <Button x:Name="BtnCancel" Content="Cancelar" Click="BtnCancel_Click"
+                    Width="90" Height="34" Margin="0,0,10,0"
+                    Background="#1A1A25" Foreground="#9999B0"
+                    BorderBrush="#1E1E2E" BorderThickness="1" Cursor="Hand"/>
+            <Button x:Name="BtnUpdate" Content="Actualizar" Click="BtnUpdate_Click"
+                    Width="110" Height="34"
+                    Background="#00F0FF" Foreground="#0A0A0F"
+                    FontWeight="Black" BorderThickness="0" Cursor="Hand"/>
+        </StackPanel>
+    </Grid>
+</Window>
