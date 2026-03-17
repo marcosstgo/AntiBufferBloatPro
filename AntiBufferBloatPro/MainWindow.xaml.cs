@@ -110,6 +110,12 @@ namespace AntiBufferBloatPro
                     new Uri("pack://application:,,,/abp.png"));
             }
             catch { }
+            try
+            {
+                var v = Assembly.GetExecutingAssembly().GetName().Version?.ToString(3) ?? "1.0.0";
+                RunVersion.Text = $"v{v}";
+            }
+            catch { }
             InitializeApplication();
         }
 

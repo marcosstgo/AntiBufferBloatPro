@@ -521,8 +521,12 @@
                             <Run Text="ANTI-BUFFERBLOAT" Foreground="{StaticResource NeonCyan}"/>
                             <Run Text=" PRO" Foreground="{StaticResource NeonMagenta}"/>
                         </TextBlock>
-                        <TextBlock Text="NETWORK OPTIMIZER // LATENCY KILLER" FontSize="9" Foreground="{StaticResource Muted}" 
+                        <TextBlock Text="NETWORK OPTIMIZER // LATENCY KILLER" FontSize="9" Foreground="{StaticResource Muted}"
                                    FontWeight="Bold" Margin="0,1,0,0" FontFamily="Consolas"/>
+                        <TextBlock x:Name="TxtAppVersion" FontSize="9" FontFamily="Consolas" Margin="0,2,0,0">
+                            <Run Text=">" Foreground="{StaticResource NeonMagenta}" FontWeight="Bold"/>
+                            <Run x:Name="RunVersion" Text="v1.0.0" Foreground="{StaticResource NeonGreen}"/>
+                        </TextBlock>
                     </StackPanel>
                 </StackPanel>
 
