@@ -825,6 +825,10 @@ namespace AntiBufferBloatPro
         #region PC Gaming Optimizations
         private void ReadGamingStatus()
         {
+            // Force ControlTemplate application — controls may be in a non-selected tab (not yet rendered)
+            tgPowerPlan.ApplyTemplate();
+            tgXboxDvr.ApplyTemplate();
+
             // Power plan
             var list = RunCommand("powercfg", "/list");
             bool isUltimate = list.Contains("Ultimate", StringComparison.OrdinalIgnoreCase);

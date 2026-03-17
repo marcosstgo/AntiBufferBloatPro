@@ -785,101 +785,7 @@
             <TabControl x:Name="MainTabControl" Grid.Column="1" Grid.RowSpan="2" Style="{StaticResource GamerTabControl}" Margin="6,0,0,0"
                         SelectionChanged="MainTabControl_SelectionChanged">
 
-                <!-- ═══ TAB 1: OPTIMIZAR ═══ -->
-                <TabItem Header="OPTIMIZAR" Style="{StaticResource GamerTabItem}">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <StackPanel Margin="0,8,0,0">
-
-                            <!-- Perfiles -->
-                            <Border Style="{StaticResource CardStyle}">
-                                <StackPanel>
-                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
-                                        <TextBlock Text="◈" FontSize="14" Foreground="{StaticResource NeonAmber}" Margin="0,0,6,0" VerticalAlignment="Center"/>
-                                        <TextBlock Text="PERFILES" Style="{StaticResource SectionTitle}" Foreground="{StaticResource NeonAmber}" Margin="0"/>
-                                    </StackPanel>
-                                    <UniformGrid Columns="2" Rows="1">
-                                        <Button x:Name="btnGaming" Style="{StaticResource SecondaryBtn}" Margin="0,0,4,0"
-                                                Click="btnGaming_Click" Height="64"
-                                                ToolTip="Latencia mínima: Nagle OFF, Auto-Tuning restricted, timestamps OFF, InitialRTO 1s">
-                                            <StackPanel>
-                                                <TextBlock Text="🎮" FontSize="22" HorizontalAlignment="Center"/>
-                                                <TextBlock Text="GAMING" FontSize="9" FontWeight="Black" HorizontalAlignment="Center"
-                                                           Foreground="{StaticResource TextSecondary}" FontFamily="Consolas"/>
-                                            </StackPanel>
-                                        </Button>
-                                        <Button x:Name="btnReset" Style="{StaticResource SecondaryBtn}" Margin="4,0,0,0"
-                                                Click="btnReset_Click" Height="64"
-                                                ToolTip="Restaura todos los parámetros TCP a los valores por defecto de Windows">
-                                            <StackPanel>
-                                                <TextBlock Text="↺" FontSize="22" HorizontalAlignment="Center"/>
-                                                <TextBlock Text="RESET" FontSize="9" FontWeight="Black" HorizontalAlignment="Center"
-                                                           Foreground="{StaticResource TextSecondary}" FontFamily="Consolas"/>
-                                            </StackPanel>
-                                        </Button>
-                                    </UniformGrid>
-                                </StackPanel>
-                            </Border>
-
-                            <!-- PC Gaming Boost -->
-                            <Border Style="{StaticResource CardStyle}" Margin="0,8,0,0">
-                                <StackPanel>
-                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                                        <TextBlock Text="◈" FontSize="14" Foreground="{StaticResource NeonCyan}" Margin="0,0,6,0" VerticalAlignment="Center"
-                                                   Effect="{StaticResource CyanGlowSubtle}"/>
-                                        <TextBlock Text="PC GAMING BOOST" Style="{StaticResource SectionTitle}" Foreground="{StaticResource NeonCyan}" Margin="0"/>
-                                    </StackPanel>
-                                    <CheckBox x:Name="tgPowerPlan" Content="Ultimate Performance (plan de energía)"
-                                              Style="{StaticResource ToggleCheckBox}"
-                                              Checked="tgPowerPlan_Checked" Unchecked="tgPowerPlan_Unchecked"/>
-                                    <CheckBox x:Name="tgXboxDvr" Content="Xbox DVR deshabilitado"
-                                              Style="{StaticResource ToggleCheckBox}"
-                                              Checked="tgXboxDvr_Checked" Unchecked="tgXboxDvr_Unchecked"/>
-                                    <Border Background="{StaticResource Border}" Height="1" Margin="0,8" Opacity="0.5"/>
-                                    <Grid Margin="0,0,0,10">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <StackPanel Grid.Column="0">
-                                            <TextBlock Text="GPU HARDWARE SCHEDULING (HAGS)" Style="{StaticResource MetricLabel}" FontFamily="Consolas"/>
-                                            <TextBlock x:Name="lblHags" Text="Leyendo..." Foreground="{StaticResource TextSecondary}"
-                                                       FontSize="12" FontFamily="Consolas" FontWeight="Bold"/>
-                                        </StackPanel>
-                                    </Grid>
-                                    <Button Content="🛡 Añadir exclusión Defender" Style="{StaticResource SecondaryBtn}"
-                                            Click="AddDefenderExclusion_Click" HorizontalAlignment="Stretch"/>
-                                </StackPanel>
-                            </Border>
-
-                            <!-- Acciones TCP -->
-                            <Border Style="{StaticResource CardStyle}" Margin="0,8,0,0">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
-                                        <TextBlock Text="◈" FontSize="14" Foreground="{StaticResource NeonGreen}" Margin="0,0,6,0" VerticalAlignment="Center"/>
-                                        <TextBlock Text="ACCIONES TCP" Style="{StaticResource SectionTitle}" Foreground="{StaticResource NeonGreen}" Margin="0"/>
-                                    </StackPanel>
-                                    <UniformGrid Grid.Row="1" Columns="3" Rows="3">
-                                        <Button Content="✅ Auto-Tuning NORMAL"      Style="{StaticResource SecondaryBtn}" Margin="3" Click="NormalAuto_Click"/>
-                                        <Button Content="⚡ Auto-Tuning RESTRICTED"  Style="{StaticResource SecondaryBtn}" Margin="3" Click="RestrictedAuto_Click"/>
-                                        <Button Content="🚫 Auto-Tuning OFF"         Style="{StaticResource SecondaryBtn}" Margin="3" Click="DisableAuto_Click"/>
-                                        <Button Content="✅ RSS ON"           Style="{StaticResource SecondaryBtn}" Margin="3" Click="EnableRss_Click"/>
-                                        <Button Content="⛔ RSS OFF"          Style="{StaticResource SecondaryBtn}" Margin="3" Click="DisableRss_Click"/>
-                                        <Button Content="💾 Backup TCP"       Style="{StaticResource SecondaryBtn}" Margin="3" Click="Backup_Click"/>
-                                        <Button Content="♻️ Restore TCP"      Style="{StaticResource SecondaryBtn}" Margin="3" Click="Restore_Click"/>
-                                        <Button Content="🩺 Diagnóstico"      Style="{StaticResource SecondaryBtn}" Margin="3" Click="Diag_Click"/>
-                                    </UniformGrid>
-                                </Grid>
-                            </Border>
-
-                        </StackPanel>
-                    </ScrollViewer>
-                </TabItem>
-
-                <!-- ═══ TAB 2: TEST BUFFERBLOAT ═══ -->
+                <!-- ═══ TAB 1: TEST BUFFERBLOAT ═══ -->
                 <TabItem Header="⚡ TEST BUFFERBLOAT" Style="{StaticResource GamerTabItem}">
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <StackPanel Margin="0,8,0,0">
@@ -1059,6 +965,100 @@
                                                 Style="{StaticResource SecondaryBtn}" Click="btnExportJson_Click"/>
                                     </StackPanel>
                                 </StackPanel>
+                            </Border>
+
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
+
+                <!-- ═══ TAB 2: OPTIMIZAR ═══ -->
+                <TabItem Header="OPTIMIZAR" Style="{StaticResource GamerTabItem}">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="0,8,0,0">
+
+                            <!-- Perfiles -->
+                            <Border Style="{StaticResource CardStyle}">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
+                                        <TextBlock Text="◈" FontSize="14" Foreground="{StaticResource NeonAmber}" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                        <TextBlock Text="PERFILES" Style="{StaticResource SectionTitle}" Foreground="{StaticResource NeonAmber}" Margin="0"/>
+                                    </StackPanel>
+                                    <UniformGrid Columns="2" Rows="1">
+                                        <Button x:Name="btnGaming" Style="{StaticResource SecondaryBtn}" Margin="0,0,4,0"
+                                                Click="btnGaming_Click" Height="64"
+                                                ToolTip="Latencia mínima: Nagle OFF, Auto-Tuning restricted, timestamps OFF, InitialRTO 1s">
+                                            <StackPanel>
+                                                <TextBlock Text="🎮" FontSize="22" HorizontalAlignment="Center"/>
+                                                <TextBlock Text="GAMING" FontSize="9" FontWeight="Black" HorizontalAlignment="Center"
+                                                           Foreground="{StaticResource TextSecondary}" FontFamily="Consolas"/>
+                                            </StackPanel>
+                                        </Button>
+                                        <Button x:Name="btnReset" Style="{StaticResource SecondaryBtn}" Margin="4,0,0,0"
+                                                Click="btnReset_Click" Height="64"
+                                                ToolTip="Restaura todos los parámetros TCP a los valores por defecto de Windows">
+                                            <StackPanel>
+                                                <TextBlock Text="↺" FontSize="22" HorizontalAlignment="Center"/>
+                                                <TextBlock Text="RESET" FontSize="9" FontWeight="Black" HorizontalAlignment="Center"
+                                                           Foreground="{StaticResource TextSecondary}" FontFamily="Consolas"/>
+                                            </StackPanel>
+                                        </Button>
+                                    </UniformGrid>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- PC Gaming Boost -->
+                            <Border Style="{StaticResource CardStyle}" Margin="0,8,0,0">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                                        <TextBlock Text="◈" FontSize="14" Foreground="{StaticResource NeonCyan}" Margin="0,0,6,0" VerticalAlignment="Center"
+                                                   Effect="{StaticResource CyanGlowSubtle}"/>
+                                        <TextBlock Text="PC GAMING BOOST" Style="{StaticResource SectionTitle}" Foreground="{StaticResource NeonCyan}" Margin="0"/>
+                                    </StackPanel>
+                                    <CheckBox x:Name="tgPowerPlan" Content="Ultimate Performance (plan de energía)"
+                                              Style="{StaticResource ToggleCheckBox}"
+                                              Checked="tgPowerPlan_Checked" Unchecked="tgPowerPlan_Unchecked"/>
+                                    <CheckBox x:Name="tgXboxDvr" Content="Xbox DVR deshabilitado"
+                                              Style="{StaticResource ToggleCheckBox}"
+                                              Checked="tgXboxDvr_Checked" Unchecked="tgXboxDvr_Unchecked"/>
+                                    <Border Background="{StaticResource Border}" Height="1" Margin="0,8" Opacity="0.5"/>
+                                    <Grid Margin="0,0,0,10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock Text="GPU HARDWARE SCHEDULING (HAGS)" Style="{StaticResource MetricLabel}" FontFamily="Consolas"/>
+                                            <TextBlock x:Name="lblHags" Text="Leyendo..." Foreground="{StaticResource TextSecondary}"
+                                                       FontSize="12" FontFamily="Consolas" FontWeight="Bold"/>
+                                        </StackPanel>
+                                    </Grid>
+                                    <Button Content="🛡 Añadir exclusión Defender" Style="{StaticResource SecondaryBtn}"
+                                            Click="AddDefenderExclusion_Click" HorizontalAlignment="Stretch"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Acciones TCP -->
+                            <Border Style="{StaticResource CardStyle}" Margin="0,8,0,0">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
+                                        <TextBlock Text="◈" FontSize="14" Foreground="{StaticResource NeonGreen}" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                        <TextBlock Text="ACCIONES TCP" Style="{StaticResource SectionTitle}" Foreground="{StaticResource NeonGreen}" Margin="0"/>
+                                    </StackPanel>
+                                    <UniformGrid Grid.Row="1" Columns="3" Rows="3">
+                                        <Button Content="✅ Auto-Tuning NORMAL"      Style="{StaticResource SecondaryBtn}" Margin="3" Click="NormalAuto_Click"/>
+                                        <Button Content="⚡ Auto-Tuning RESTRICTED"  Style="{StaticResource SecondaryBtn}" Margin="3" Click="RestrictedAuto_Click"/>
+                                        <Button Content="🚫 Auto-Tuning OFF"         Style="{StaticResource SecondaryBtn}" Margin="3" Click="DisableAuto_Click"/>
+                                        <Button Content="✅ RSS ON"           Style="{StaticResource SecondaryBtn}" Margin="3" Click="EnableRss_Click"/>
+                                        <Button Content="⛔ RSS OFF"          Style="{StaticResource SecondaryBtn}" Margin="3" Click="DisableRss_Click"/>
+                                        <Button Content="💾 Backup TCP"       Style="{StaticResource SecondaryBtn}" Margin="3" Click="Backup_Click"/>
+                                        <Button Content="♻️ Restore TCP"      Style="{StaticResource SecondaryBtn}" Margin="3" Click="Restore_Click"/>
+                                        <Button Content="🩺 Diagnóstico"      Style="{StaticResource SecondaryBtn}" Margin="3" Click="Diag_Click"/>
+                                    </UniformGrid>
+                                </Grid>
                             </Border>
 
                         </StackPanel>
